@@ -1,10 +1,12 @@
 import React, { useEffect } from "react";
+import { Route, Switch } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { Grommet, Box, Heading, Button } from "grommet";
-import { Notification } from "grommet-icons";
+import { Grommet, Box } from "grommet";
 import Home from "./pages/Home";
 import Auth from "./pages/auth/Auth";
 import { getCurrentUser } from "./store/actions/userActions";
+import HeaderBar from "./components/interface/header_bar/HeaderBar";
+import appConfig from "./config/config";
 
 const App = () => {
     const dispatch = useDispatch();
@@ -26,31 +28,14 @@ const App = () => {
         },
     };
 
-    const AppBar = (props) => (
-        <Box
-            tag="header"
-            direction="row"
-            align="center"
-            justify="between"
-            background="brand"
-            pad={{ left: "medium", right: "small", vertical: "small" }}
-            elevation="medium"
-            style={{ zIndex: "1" }}
-            {...props}
-        />
-    );
-
     return (
         <Grommet theme={theme} full>
             <Box fill>
-                <AppBar>
-                    <Heading level="3" margin="none">
-                        Студия
-                    </Heading>
-                    <Button icon={<Notification />} />
-                </AppBar>
-                <Home />
-                <Auth />
+                <HeaderBar />
+                <Switch>
+                    <Route path={appConfig.paths.AUTH} component={Auth} />
+                    <Route path={appConfig.paths.HOME} component={Home} />
+                </Switch>
             </Box>
         </Grommet>
     );

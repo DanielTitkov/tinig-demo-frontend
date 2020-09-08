@@ -7,6 +7,10 @@ const appConfig = {
     localStorage: {
         TOKEN: "tinigDemoToken",
     },
+    paths: {
+        HOME: "/",
+        AUTH: "/auth",
+    },
 };
 
 export default appConfig;

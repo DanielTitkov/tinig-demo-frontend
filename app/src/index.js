@@ -1,5 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom";
+import { BrowserRouter as Router, Route } from "react-router-dom";
 import App from "./App";
 import { createStore, applyMiddleware } from "redux";
 import thunk from "redux-thunk";
@@ -12,7 +13,9 @@ const store = createStore(rootReducer, applyMiddleware(thunk));
 ReactDOM.render(
     <React.StrictMode>
         <ProviderWrapper store={store}>
-            <App />
+            <Router>
+                <Route path="/:filter?" component={App} />
+            </Router>
         </ProviderWrapper>
     </React.StrictMode>,
     document.getElementById("root"),
