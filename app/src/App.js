@@ -1,10 +1,18 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { useDispatch } from "react-redux";
 import { Grommet, Box, Heading, Button } from "grommet";
 import { Notification } from "grommet-icons";
 import Home from "./pages/Home";
 import Auth from "./pages/auth/Auth";
+import { getCurrentUser } from "./store/actions/userActions";
 
 const App = () => {
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+        dispatch(getCurrentUser());
+    }, [dispatch]);
+
     const theme = {
         global: {
             font: {

@@ -8,6 +8,7 @@ const LoginForm = () => {
     const [value, setValue] = React.useState({});
 
     const handleSumbit = ({ value }) => {
+        setValue({});
         dispatch(getToken(value));
     };
 

@@ -24,6 +24,16 @@ const userReducer = (state = initState, action) => {
                 ...state,
                 error: action.error,
             };
+        case "GET_USER_SUCCESS":
+            return {
+                ...state,
+                currentUser: action.data,
+            }
+        case "GET_USER_ERROR":
+            return {
+                ...state,
+                error: action.error,
+            };
         default:
             return state;
     }
