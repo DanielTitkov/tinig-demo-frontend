@@ -10,6 +10,7 @@ const appConfig = {
     paths: {
         HOME: "/",
         AUTH: "/auth",
+        LOGOUT: "/logout",
     },
 };
 

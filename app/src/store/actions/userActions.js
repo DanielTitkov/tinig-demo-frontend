@@ -1,3 +1,4 @@
+import { push } from "connected-react-router";
 import axios from "axios";
 import appConfig from "../../config/config";
 
@@ -22,6 +23,10 @@ export const getToken = (loginData) => {
 export const getCurrentUser = () => {
     return (dispatch, getState) => {
         const token = getState().user.token || localStorage.getItem(appConfig.localStorage.TOKEN);
+        if (!token) {
+            dispatch(push(appConfig.paths.AUTH));
+            return;
+        }
         axios
             .post(
                 appConfig.API_URL + appConfig.urls.GET_USER,
@@ -34,8 +39,8 @@ export const getCurrentUser = () => {
                 },
             )
             .then((response) => {
-                console.log("USER", response.data);
                 dispatch({ type: "GET_USER_SUCCESS", data: response.data });
+                dispatch(push(appConfig.paths.HOME));
             })
             .catch((err) => {
                 console.log("USER ERROR", err.response.data);
@@ -44,5 +49,15 @@ export const getCurrentUser = () => {
                     error: err,
                 });
             });
+    };
+};
+
+export const logoutUser = () => {
+    return (dispatch, getState) => {
+        localStorage.removeItem(appConfig.localStorage.TOKEN);
+        dispatch(push(appConfig.paths.AUTH));
+        dispatch({
+            type: "LOGOUT_USER",
+        });
     };
 };

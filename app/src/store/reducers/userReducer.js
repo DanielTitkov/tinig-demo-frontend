@@ -28,11 +28,18 @@ const userReducer = (state = initState, action) => {
             return {
                 ...state,
                 currentUser: action.data,
-            }
+            };
         case "GET_USER_ERROR":
             return {
                 ...state,
                 error: action.error,
+            };
+        case "LOGOUT_USER":
+            return {
+                ...state,
+                currentUser: null,
+                token: null,
+                error: null, // maybe
             };
         default:
             return state;

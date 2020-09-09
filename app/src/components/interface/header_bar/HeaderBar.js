@@ -1,11 +1,19 @@
 import React from "react";
-import { Box, Heading, Button, Nav, Header, Anchor } from "grommet";
+import { useDispatch, useSelector } from "react-redux";
+import { Heading, Button, Nav, Header, Anchor } from "grommet";
 import { Notification } from "grommet-icons";
-import { Link } from "react-router-dom";
 import appConfig from "../../../config/config";
 import { NavAnchor } from "../nav_anchor/NavAnchor";
+import { logoutUser } from "../../../store/actions/userActions";
 
 const HeaderBar = () => {
+    const dispatch = useDispatch();
+    const currentUser = useSelector((state) => state.user.currentUser);
+
+    const handleLogout = () => {
+        dispatch(logoutUser());
+    };
+
     return (
         <Header
             tag="header"
@@ -23,7 +31,8 @@ const HeaderBar = () => {
             <Button icon={<Notification />} />
             <Nav direction="row">
                 <NavAnchor label="Home" to={appConfig.paths.HOME} />
-                <NavAnchor label="Login" to={appConfig.paths.AUTH} />
+                {!currentUser ? <NavAnchor label="Login" to={appConfig.paths.AUTH} /> : null}
+                {currentUser ? <Anchor label="Logout" onClick={handleLogout} /> : null}
             </Nav>
         </Header>
     );
