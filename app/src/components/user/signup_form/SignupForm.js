@@ -1,14 +1,22 @@
 import React from "react";
+import { useDispatch } from "react-redux";
 import { Box, Button, Form, FormField, TextInput, MaskedInput } from "grommet";
+import { createUser } from "../../../store/actions/userActions";
 
 const SignupForm = () => {
+    const dispatch = useDispatch();
     const [value, setValue] = React.useState({});
+
+    const handleSumbit = ({ value }) => {
+        dispatch(createUser(value));
+        setValue({});
+    };
 
     return (
         <Form
             value={value}
             onChange={(nextValue) => setValue(nextValue)}
-            onSubmit={({ value }) => {console.log(value)}}
+            onSubmit={handleSumbit}
             validate="blur"
         >
             <FormField name="username" required>

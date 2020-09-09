@@ -1,6 +1,6 @@
 import React from "react";
-import { Box, Button, Form, FormField, TextInput } from "grommet";
 import { useDispatch } from "react-redux";
+import { Box, Button, Form, FormField, TextInput } from "grommet";
 import { getToken } from "../../../store/actions/userActions";
 
 const LoginForm = () => {
@@ -8,8 +8,8 @@ const LoginForm = () => {
     const [value, setValue] = React.useState({});
 
     const handleSumbit = ({ value }) => {
-        setValue({});
         dispatch(getToken(value));
+        setValue({});
     };
 
     return (

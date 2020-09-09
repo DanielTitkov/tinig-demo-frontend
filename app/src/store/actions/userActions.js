@@ -12,10 +12,7 @@ export const getToken = (loginData) => {
                 dispatch(getCurrentUser());
             })
             .catch((err) => {
-                dispatch({
-                    type: "GET_TOKEN_ERROR",
-                    error: err,
-                });
+                dispatch(setUserError(err.response.data.message));
             });
     };
 };
@@ -43,11 +40,22 @@ export const getCurrentUser = () => {
                 dispatch(push(appConfig.paths.HOME));
             })
             .catch((err) => {
-                console.log("USER ERROR", err.response.data);
-                dispatch({
-                    type: "GET_USER_ERROR",
-                    error: err,
-                });
+                dispatch(setUserError(err.response.data.message));
+            });
+    };
+};
+
+export const createUser = (createUserData) => {
+    return (dispatch, getState) => {
+        axios
+            .post(appConfig.API_URL + appConfig.urls.CREATE_USER, createUserData)
+            .then((response) => {
+                dispatch({ type: "CREATE_USER_SUCCESS", data: response.data });
+                dispatch(setUserMessage("user created"));
+                dispatch(push(appConfig.paths.AUTH));
+            })
+            .catch((err) => {
+                dispatch(setUserError(err.response.data.message));
             });
     };
 };
@@ -59,5 +67,41 @@ export const logoutUser = () => {
         dispatch({
             type: "LOGOUT_USER",
         });
+    };
+};
+
+export const setUserError = (error) => {
+    return (dispatch, getState) => {
+        dispatch({
+            type: "SET_USER_ERROR",
+            error: error,
+        });
+        dispatch(hideErrorOnTimeout());
+    };
+};
+
+export const setUserMessage = (message) => {
+    return (dispatch, getState) => {
+        dispatch({
+            type: "SET_USER_MESSAGE",
+            message: message,
+        });
+        dispatch(hideMessageOnTimeout());
+    };
+};
+
+export const hideErrorOnTimeout = () => {
+    return (dispatch, getState) => {
+        setTimeout(() => {
+            dispatch(setUserError(null));
+        }, 3000);
+    };
+};
+
+export const hideMessageOnTimeout = () => {
+    return (dispatch, getState) => {
+        setTimeout(() => {
+            dispatch(setUserMessage(null));
+        }, 3000);
     };
 };
