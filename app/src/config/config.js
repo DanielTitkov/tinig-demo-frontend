@@ -12,6 +12,8 @@ const appConfig = {
         HOME: "/",
         AUTH: "/auth",
         LOGOUT: "/logout",
+        PROFILE: "/profile",
+        DASHBOARD: "/dashboard",
     },
 };
 

@@ -1,10 +1,10 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Heading, Button, Nav, Header, Anchor } from "grommet";
-import { Notification } from "grommet-icons";
+import { Heading, Nav, Header, Anchor } from "grommet";
 import appConfig from "../../../config/config";
 import { NavAnchor } from "../nav_anchor/NavAnchor";
 import { logoutUser } from "../../../store/actions/userActions";
+import "./HeaderBar.css";
 
 const HeaderBar = () => {
     const dispatch = useDispatch();
@@ -16,6 +16,7 @@ const HeaderBar = () => {
 
     return (
         <Header
+            className="header-bar-wrapper"
             tag="header"
             direction="row"
             align="center"
@@ -26,12 +27,13 @@ const HeaderBar = () => {
             style={{ zIndex: "1" }}
         >
             <Heading level="3" margin="none">
-                Студия
+                Studio
             </Heading>
-            <Button icon={<Notification />} />
             <Nav direction="row">
                 <NavAnchor label="Home" to={appConfig.paths.HOME} />
+                <NavAnchor label="Dashboard" to={appConfig.paths.DASHBOARD} />
                 {!currentUser ? <NavAnchor label="Login" to={appConfig.paths.AUTH} /> : null}
+                {currentUser ? <NavAnchor label="Profile" to={appConfig.paths.PROFILE} /> : null}
                 {currentUser ? <Anchor label="Logout" onClick={handleLogout} /> : null}
             </Nav>
         </Header>
