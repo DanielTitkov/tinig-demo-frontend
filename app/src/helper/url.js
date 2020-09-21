@@ -1,11 +1,17 @@
-export const parseQueryString = (string, hash=false) => {
-    return string.slice(hash ? 6 : 1).split('&')
+export const parseQueryString = (string, hash = false) => {
+    return string
+        .slice(hash ? 6 : 1)
+        .split("&")
         .map((queryParam) => {
-            let kvp = queryParam.split('=');
-            return {key: kvp[0], value: kvp[1]}
+            let kvp = queryParam.split("=");
+            return { key: kvp[0], value: kvp[1] };
         })
         .reduce((query, kvp) => {
             query[kvp.key] = kvp.value;
-            return query
-        }, {})
+            return query;
+        }, {});
+};
+
+export const getErrorMessage = (err) => {
+    return err.response ? err.response.data.message : "server cannot be reached";
 };

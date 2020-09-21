@@ -1,6 +1,7 @@
 import { push } from "connected-react-router";
 import axios from "axios";
 import appConfig from "../../config/config";
+import { getErrorMessage } from "../../helper/url";
 
 export const getToken = (loginData) => {
     return (dispatch, getState) => {
@@ -12,7 +13,7 @@ export const getToken = (loginData) => {
                 dispatch(getCurrentUser());
             })
             .catch((err) => {
-                dispatch(setUserError(err.response.data.message));
+                dispatch(setUserError(getErrorMessage(err)));
             });
     };
 };
@@ -40,7 +41,7 @@ export const getCurrentUser = () => {
                 dispatch(push(appConfig.paths.HOME));
             })
             .catch((err) => {
-                dispatch(setUserError(err.response.data.message));
+                dispatch(setUserError(getErrorMessage(err)));
             });
     };
 };
@@ -55,7 +56,7 @@ export const createUser = (createUserData) => {
                 dispatch(push(appConfig.paths.AUTH));
             })
             .catch((err) => {
-                dispatch(setUserError(err.response.data.message));
+                dispatch(setUserError(getErrorMessage(err)));
             });
     };
 };
