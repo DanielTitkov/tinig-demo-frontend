@@ -1,10 +1,11 @@
 import React from "react";
 import { DataChart, Heading } from "grommet";
-import "./DashboardChart.css";
+import "./TaskDashboardChart.css";
+import appConfig from "../../../config/config";
 
-const DashboardChart = ({ chartData }) => {
+const TaskDashboardChart = ({ task }) => {
     const types = {
-        price: {
+        [appConfig.tasks.types.PRICE]: {
             typeTitle: "price monitoring",
             series: ["date", "price"],
             chart: [
@@ -27,16 +28,32 @@ const DashboardChart = ({ chartData }) => {
             axis: { x: "date", y: { property: "amount", granularity: "fine" } },
             guide: { y: { granularity: "medium" }, x: { granularity: "fine" } },
         },
+        [appConfig.tasks.types.RANDOM]: {
+            typeTitle: "random number",
+            series: ["date", "value"],
+            chart: [
+                {
+                    property: "value",
+                    type: "line",
+                    thickness: "xxsmall",
+                    dash: false,
+                    round: true,
+                },
+                { property: "value", type: "point", thickness: "small" },
+            ],
+            axis: { x: "date", y: { property: "value", granularity: "fine" } },
+            guide: { y: { granularity: "medium" }, x: { granularity: "fine" } },
+        },
     };
 
     let chartParams = null;
-    if (chartData.type && types[chartData.type]) {
-        chartParams = types[chartData.type];
+    if (task.type && types[task.type]) {
+        chartParams = types[task.type];
     } else {
         return (
             <div className="dashboard-chart-wrapper">
                 <Heading className="dashboard-chart-heading" level="2">
-                    {chartData.title ? chartData.title : "Unknown chart"}
+                    {task.title ? task.title : "Unknown chart"}
                 </Heading>
                 <Heading color="status-error" level="3">
                     Failed to render chart
@@ -45,18 +62,49 @@ const DashboardChart = ({ chartData }) => {
         );
     }
 
+    const data =
+        (task.items &&
+            task.items.map((i) => ({
+                ...i.data,
+                date: i.createTime,
+            }))) ||
+        [];
+
     return (
         <div className="dashboard-chart-wrapper">
-            <Heading className="dashboard-chart-heading" level="2">
-                {chartData.title}
+            <Heading
+                level="2"
+                margin={{
+                    horizontal: "none",
+                    top: "large",
+                    bottom: "xsmall",
+                }}
+            >
+                {task.title}
             </Heading>
-            <Heading color="dark-6" className="dashboard-chart-subheading" level="5">
+            <Heading
+                level="4"
+                margin={{
+                    horizontal: "none",
+                    vertical: "xsmall",
+                }}
+            >
+                {task.description}
+            </Heading>
+            <Heading
+                color="dark-6"
+                level="5"
+                margin={{
+                    horizontal: "none",
+                    vertical: "xsmall",
+                }}
+            >
                 Type: {chartParams.typeTitle}
             </Heading>
-            {chartData.data.length > 0 ? (
+            {data.length > 0 ? (
                 <DataChart
                     size={{ width: 700 }}
-                    data={chartData.data}
+                    data={data}
                     series={chartParams.series}
                     chart={chartParams.chart}
                     bounds="align"
@@ -74,4 +122,4 @@ const DashboardChart = ({ chartData }) => {
     );
 };
 
-export default DashboardChart;
+export default TaskDashboardChart;

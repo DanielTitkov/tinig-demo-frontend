@@ -1,3 +1,5 @@
+const privatePrefix = "private";
+
 const appConfig = {
     API_URL: "http://localhost:8000/",
     urls: {
@@ -6,7 +8,8 @@ const appConfig = {
         CREATE_USER: "createUser",
         GET_SYSTEM_SUMMARY: "getSystemSummary",
         // private
-        GET_USER: "private/getUser",
+        GET_USER: privatePrefix + "/getUser",
+        GET_TASKS: privatePrefix + "/getTasks",
     },
     localStorage: {
         TOKEN: "tinigDemoToken",
@@ -16,7 +19,14 @@ const appConfig = {
         AUTH: "/auth",
         LOGOUT: "/logout",
         PROFILE: "/profile",
-        DASHBOARD: "/dashboard",
+        TASKS: "/tasks",
+        // DASHBOARD: "/dashboard",
+    },
+    tasks: {
+        types: {
+            RANDOM: "random",
+            PRICE: "price",
+        },
     },
 };
 

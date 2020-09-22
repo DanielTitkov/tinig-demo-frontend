@@ -8,7 +8,7 @@ import { getCurrentUser } from "./store/actions/userActions";
 import HeaderBar from "./components/interface/header_bar/HeaderBar";
 import appConfig from "./config/config";
 import Profile from "./pages/profile/Profile";
-import Dashboard from "./pages/dashboard/Dashboard";
+import Tasks from "./pages/Tasks/Tasks";
 
 const App = () => {
     const dispatch = useDispatch();
@@ -37,7 +37,7 @@ const App = () => {
                 <Switch>
                     <Route path={appConfig.paths.AUTH} component={Auth} />
                     <Route path={appConfig.paths.PROFILE} component={Profile} />
-                    <Route path={appConfig.paths.DASHBOARD} component={Dashboard} />
+                    <Route path={appConfig.paths.TASKS} component={Tasks} />
                     <Route path={appConfig.paths.HOME} component={Home} />
                 </Switch>
             </Box>

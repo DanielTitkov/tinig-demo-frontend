@@ -80,7 +80,12 @@ const SummaryDashboard = () => {
                                 detail: [
                                     {
                                         name: "Per task",
-                                        count: systemSummary.avgItemsPerTask,
+                                        count: systemSummary.avgItemsPerTask
+                                            ? Math.round(
+                                                  (systemSummary.avgItemsPerTask + Number.EPSILON) *
+                                                      100,
+                                              ) / 100
+                                            : null,
                                         color: "brand",
                                     },
                                 ],

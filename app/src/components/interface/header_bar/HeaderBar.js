@@ -31,7 +31,7 @@ const HeaderBar = () => {
             </Heading>
             <Nav direction="row">
                 <NavAnchor label="Home" to={appConfig.paths.HOME} />
-                <NavAnchor label="Dashboard" to={appConfig.paths.DASHBOARD} />
+                <NavAnchor label="Tasks" to={appConfig.paths.TASKS} />
                 {!currentUser ? <NavAnchor label="Login" to={appConfig.paths.AUTH} /> : null}
                 {currentUser ? <NavAnchor label="Profile" to={appConfig.paths.PROFILE} /> : null}
                 {currentUser ? <Anchor label="Logout" onClick={handleLogout} /> : null}
