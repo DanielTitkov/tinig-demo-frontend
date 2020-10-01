@@ -5,7 +5,7 @@ import CreateTaskBlock from "../../components/task/create_task_block/CreateTaskB
 
 const Tasks = () => {
     return (
-        <Box direction="row" flex>
+        <Box direction="column" flex>
             <Box flex align="center" basis="large">
                 <CreateTaskBlock />
                 <TaskDashboard />
