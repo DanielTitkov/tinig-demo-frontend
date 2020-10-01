@@ -27,6 +27,14 @@ const appConfig = {
             RANDOM: "random",
             PRICE: "price",
         },
+        params: {
+            random: {
+                MIN_MIN: 1,
+                MIN_MAX: 99,
+                MAX_MIN: 2,
+                MAX_MAX: 100,
+            },
+        },
     },
 };
 
