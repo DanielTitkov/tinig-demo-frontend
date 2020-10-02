@@ -26,6 +26,18 @@ const taskReducer = (state = initState, action) => {
                 ...state,
                 loading: true,
             };
+        case actionTypes.task.CREATE_TASK_SUCCESS:
+            return {
+                ...state,
+                loading: false,
+                error: null,
+            }
+        case actionTypes.task.CREATE_TASK_ERROR:
+            return {
+                ...state,
+                loading: false,
+                error: action.error,
+            }
         default:
             return state;
     }

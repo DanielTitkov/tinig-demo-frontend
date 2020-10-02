@@ -16,7 +16,7 @@ const SummaryDashboard = () => {
     useEffect(() => {
         dispatch(getSystemSummary());
     }, [dispatch]);
-
+    // TODO: maybe move loader to page
     return (
         <Loader
             loaded={!summaryLoading}

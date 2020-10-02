@@ -1,19 +1,38 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Box, Button, Form, FormField, Select, TextArea, TextInput } from "grommet";
 import { validateNumberInBounds } from "../../../helper/validate";
 import appConfig from "../../../config/config";
-import { formatSlug } from "../../../helper/format";
+import { buildTaskParams, formatSlug } from "../../../helper/format";
+import { createTask } from "../../../store/actions/taskActions";
+import { useDispatch } from "react-redux";
 
 const CreateTaskForm = () => {
+    const dispatch = useDispatch();
+
     const [value, setValue] = useState({});
 
-    const handleUpdateSlug = (e) => {
-        const slug = formatSlug(e.target.value);
-        setValue({
-            ...value,
-            slug: slug,
-        });
+    const handleCreate = ({ value }) => {
+        const request = {
+            title: value.title,
+            slug: value.slug,
+            description: value.description,
+            type: value.type,
+            params: buildTaskParams(value),
+        };
+        dispatch(createTask(request));
     };
+
+    const title = value.title || "";
+    useEffect(() => {
+        const handleUpdateSlug = (title) => {
+            const slug = formatSlug(title || "");
+            setValue((prev) => ({
+                ...prev,
+                slug: slug,
+            }));
+        };
+        handleUpdateSlug(title);
+    }, [title]);
 
     return (
         <Form
@@ -21,12 +40,10 @@ const CreateTaskForm = () => {
             validate="blur"
             onChange={(nextValue) => setValue(nextValue)}
             onReset={() => setValue({})}
-            onSubmit={({ value }) => {
-                console.log("CREATE TASK", value);
-            }}
+            onSubmit={handleCreate}
         >
             <FormField name="title" htmlfor="title-input-id" label="Task title (unique)" required>
-                <TextInput id="title-input-id" name="title" onChange={handleUpdateSlug} />
+                <TextInput id="title-input-id" name="title" />
             </FormField>
             <FormField name="slug" htmlfor="slug-input-id" label="Slug (unique)" required>
                 <TextInput id="slug-input-id" name="slug" />
