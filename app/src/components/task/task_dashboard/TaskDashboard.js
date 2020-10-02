@@ -1,3 +1,4 @@
+import { Box } from "grommet";
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getTasks } from "../../../store/actions/taskActions";
@@ -17,11 +18,11 @@ const TaskDashboard = () => {
     }, [dispatch]);
 
     return (
-        <div>
+        <Box direction='column'>
             {tasks && tasks.map((task) => (
                 <TaskDashboardChart task={task} key={task.code} />
             ))}
-        </div>
+        </Box>
     );
 };
 

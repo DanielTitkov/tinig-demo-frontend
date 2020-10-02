@@ -71,9 +71,9 @@ const TaskDashboardChart = ({ task }) => {
         [];
 
     return (
-        <div className="dashboard-chart-wrapper">
+        <div align="start" className="dashboard-chart-wrapper">
             <Heading
-                level="2"
+                 level="2"
                 margin={{
                     horizontal: "none",
                     top: "large",
