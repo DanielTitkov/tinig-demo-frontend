@@ -1,7 +1,8 @@
 import React from "react";
-import { DataChart, Heading } from "grommet";
+import { Box, DataChart, Heading } from "grommet";
 import "./TaskDashboardChart.css";
 import appConfig from "../../../config/config";
+import TaskToggleActive from "../task_toggle_active/TaskToggleActive";
 
 const TaskDashboardChart = ({ task }) => {
     const types = {
@@ -73,14 +74,19 @@ const TaskDashboardChart = ({ task }) => {
     return (
         <div align="start" className="dashboard-chart-wrapper">
             <Heading
-                 level="2"
+                level="2"
                 margin={{
                     horizontal: "none",
                     top: "large",
                     bottom: "xsmall",
                 }}
             >
-                {task.title}
+                <Box direction="row" justify="between" gap="medium">
+                    <Box>{task.title}</Box>
+                    <Box alignSelf="center">
+                        <TaskToggleActive task={task} />
+                    </Box>
+                </Box>
             </Heading>
             <Heading
                 level="4"
@@ -103,7 +109,7 @@ const TaskDashboardChart = ({ task }) => {
             </Heading>
             {data.length > 0 ? (
                 <DataChart
-                    size={{ width: 700 }}
+                    size={{ width: 700 }} // FIXME it says invalid but works
                     data={data}
                     series={chartParams.series}
                     chart={chartParams.chart}
