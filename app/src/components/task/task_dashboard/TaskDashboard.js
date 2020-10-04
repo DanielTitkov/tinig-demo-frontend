@@ -13,8 +13,7 @@ const TaskDashboard = () => {
 
     useEffect(() => {
         const withItems = true;
-        const deactivated = false;
-        dispatch(getTasks(withItems, deactivated));
+        dispatch(getTasks(withItems));
     }, [dispatch]);
 
     return (

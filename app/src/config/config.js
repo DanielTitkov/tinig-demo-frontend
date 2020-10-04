@@ -11,6 +11,7 @@ const appConfig = {
         GET_USER: privatePrefix + "/getUser",
         GET_TASKS: privatePrefix + "/getTasks",
         CREATE_TASK: privatePrefix + "/createTask",
+        UPDATE_TASK: privatePrefix + "/updateTask",
     },
     localStorage: {
         TOKEN: "tinigDemoToken",

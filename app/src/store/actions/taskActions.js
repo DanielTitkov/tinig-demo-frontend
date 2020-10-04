@@ -10,7 +10,7 @@ export const setLoading = () => {
     };
 };
 
-export const getTasks = (withItems, deactivated) => {
+export const getTasks = (withItems) => {
     return (dispatch, getState) => {
         const token = getState().user.token || localStorage.getItem(appConfig.localStorage.TOKEN);
         // TODO: dry it
@@ -24,7 +24,6 @@ export const getTasks = (withItems, deactivated) => {
                 appConfig.API_URL + appConfig.urls.GET_TASKS,
                 {
                     withItems: withItems,
-                    deactivated: deactivated,
                 },
                 {
                     headers: {
@@ -60,9 +59,38 @@ export const createTask = (data) => {
             })
             .then((response) => {
                 dispatch({ type: actionTypes.task.CREATE_TASK_SUCCESS });
+                const withItems = true;
+                dispatch(getTasks(withItems));
             })
             .catch((err) => {
                 dispatch({ type: actionTypes.task.CREATE_TASK_ERROR, error: getErrorMessage(err) });
+            });
+    };
+};
+
+export const updateTask = (data) => {
+    return (dispatch, getState) => {
+        const token = getState().user.token || localStorage.getItem(appConfig.localStorage.TOKEN);
+        // TODO: dry it
+        if (!token) {
+            dispatch(push(appConfig.paths.AUTH));
+            return;
+        }
+        dispatch(setLoading());
+        axios
+            .post(appConfig.API_URL + appConfig.urls.UPDATE_TASK, data, {
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${token}`,
+                },
+            })
+            .then((response) => {
+                dispatch({ type: actionTypes.task.UPDATE_TASK_SUCCESS });
+                const withItems = true;
+                dispatch(getTasks(withItems));
+            })
+            .catch((err) => {
+                dispatch({ type: actionTypes.task.UPDATE_TASK_ERROR, error: getErrorMessage(err) });
             });
     };
 };
